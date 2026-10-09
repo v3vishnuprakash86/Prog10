@@ -1,10 +1,13 @@
-CREATE DATABASE CollegeDB;
-USE CollegeDB;
-
 CREATE TABLE Course (
     CourseID INT PRIMARY KEY,
     CourseName VARCHAR(50),
     Credits INT
+);
+
+CREATE TABLE Enrollment (
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID INT
 );
 
 INSERT INTO Course (CourseID, CourseName, Credits) VALUES
@@ -12,37 +15,28 @@ INSERT INTO Course (CourseID, CourseName, Credits) VALUES
 (202, 'Data Structures', 3),
 (203, 'Mathematics', 4);
 
-CREATE TABLE Enrollment (
-    EnrollmentID INT PRIMARY KEY,
-    StudentID INT,
-    CourseID INT,
-    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
-);
-
 INSERT INTO Enrollment (EnrollmentID, StudentID, CourseID) VALUES
 (1, 1001, 201),
 (2, 1001, 202),
 (3, 1002, 203),
 (4, 1003, 201);
 
--- Display Course and Enrollment details
-SELECT * FROM Course;
-SELECT * FROM Enrollment;
-
--- LEFT JOIN
-SELECT Course.CourseID,
-       Course.CourseName,
-       Enrollment.EnrollmentID,
-       Enrollment.StudentID
+SELECT
+    Course.CourseID,
+    Course.CourseName,
+    Course.Credits,
+    Enrollment.EnrollmentID,
+    Enrollment.StudentID
 FROM Course
 LEFT JOIN Enrollment
 ON Course.CourseID = Enrollment.CourseID;
 
--- RIGHT JOIN
-SELECT Course.CourseID,
-       Course.CourseName,
-       Enrollment.EnrollmentID,
-       Enrollment.StudentID
+SELECT
+    Course.CourseID,
+    Course.CourseName,
+    Course.Credits,
+    Enrollment.EnrollmentID,
+    Enrollment.StudentID
 FROM Course
 RIGHT JOIN Enrollment
 ON Course.CourseID = Enrollment.CourseID;
